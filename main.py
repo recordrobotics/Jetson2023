@@ -1,5 +1,6 @@
 import numpy as np
 import cv2 as cv
+import networktables
 import logging
 import math
 import time
@@ -17,6 +18,10 @@ at_detector = Detector(
     decode_sharpening=0.25,
     debug=0
 )
+
+vision_nt = networktables.getTable('Vision')
+# waiting for networktables
+time.sleep(0.5)
 
 while(True):
     start_time = time.time()
@@ -40,6 +45,9 @@ while(True):
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
 
+    # sending pose
+    vision_nt.putNumberArray('target_position', tags.pose_t)  
+    
     # display colorless image with apriltags marked
     cv.imshow('AprilTag Detect Demo', debug_image)
 
