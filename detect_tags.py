@@ -73,10 +73,8 @@ if __name__ == "__main__":
         cv.imshow('AprilTag Detect Demo', debug_image)
         
         # send values to networktables
+        networktables(tags)
         
-        NetworkTables.getTable("SmartDashboard").putNumber("pose_t", tags.pose_t)
-        NetworkTables.getTable("SmartDashboard").putNumber("pose_R", tags.pose_R)
-        NetworkTables.getTable("SmartDashboard").putNumber("pose_err", tags.pose_err)
         
         
         
