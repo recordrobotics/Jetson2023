@@ -10,3 +10,7 @@ fx 0 cx
 
 5. Plug in [fx, fy, cx, cy] within camera_params in main.py
 6. Now it should work LOL
+
+
+everything above is done
+7. NETWORKTABLES

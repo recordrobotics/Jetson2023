@@ -31,6 +31,9 @@ for fname in images:
     # If found, add object points, image points (after refining them)
     print("Image")
     if ret == True:
+
+        print(fname)
+
         print("True")
         objpoints.append(objp)
         corners2 = cv.cornerSubPix(gray,corners, (11,11), (-1,-1), criteria)
@@ -40,3 +43,13 @@ for fname in images:
         cv.imshow('img', img)
         cv.waitKey(500)
         cv.destroyAllWindows()
+
+
+ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
+
+
+img = cv.imread('calibration_images\WIN_20231106_19_58_14_Pro.jpg')
+h,  w = img.shape[:2]
+newcameramtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
+
+print(newcameramtx)
