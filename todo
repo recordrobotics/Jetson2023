@@ -1,4 +1,4 @@
-1. Find and print correct opencv checkerboard pdf
+1. Find and print correct opencv checkerboard pdf - Done
 2. Take images of the checkerboard at different angles and put them in calibration images
 3. Run calibrate.py
 4. Get outputted matrix
