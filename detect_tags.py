@@ -36,7 +36,7 @@ def detect_tags(frame, camera_params = [862.80475869, 850.06137657, 533.8004744,
 
 # Function that takes in a "tags" object and returns only the tags that the camera is confident in
 def filter_tags(tags, DECISION_MARGIN_THRESHOLD = 40):
-    # Gets a lsit
+    # Gets a list
     filtered_tags = [tag for tag in tags if tag.decision_margin > DECISION_MARGIN_THRESHOLD]
     # Returns filtered tags
     return filtered_tags
