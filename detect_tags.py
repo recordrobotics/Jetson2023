@@ -51,6 +51,7 @@ if __name__ == "__main__":
     while(True):
         # Imports
         from draw_tags import draw_tags
+        from networktables import NetworkTables
         start_time = time.time()
 
         # Gets frame
@@ -70,6 +71,14 @@ if __name__ == "__main__":
             break
 
         cv.imshow('AprilTag Detect Demo', debug_image)
+        
+        # send values to networktables
+        networktables(tags)
+        
+        
+        
+        
+        
 
     # When everything done, release the capture
     cap.release()
