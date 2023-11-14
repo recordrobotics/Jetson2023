@@ -1,7 +1,7 @@
 # Imports
 import numpy as np
 import cv2 as cv
-import networktables
+#import networktables
 import logging
 import math
 import time
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         cv.imshow('AprilTag Detect Demo', debug_image)
         
         # send values to networktables
-        networktables(tags)
+        #networktables(tags)
         
         
         
