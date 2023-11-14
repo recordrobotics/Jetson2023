@@ -15,10 +15,8 @@ from draw_tags import draw_tags
 cap = cv.VideoCapture(1)
 start_time = time.time()
 
+
 while(True):
-
-    print("next")
-
     # Gets frame
     ret, frame = cap.read()
 
@@ -35,8 +33,6 @@ while(True):
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
 
-
-cv.imshow('AprilTag Detect Demo', debug_image)
 
 # When everything done, release the capture
 cap.release()
