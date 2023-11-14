@@ -1,10 +1,5 @@
 from networktables import NetworkTables
-from pupil_apriltags import Detector
 
-def draw_tags(
-    tags
-):
-    for tag in tags:
-        NetworkTables.getTable("SmartDashboard").putNumber("pose_t" + tag.tag_id, tag.pose_t)
-        NetworkTables.getTable("SmartDashboard").putNumber("pose_R" + tag.tag_id, tag.pose_R)
-        NetworkTables.getTable("SmartDashboard").putNumber("pose_err" + tag.tag_id, tag.pose_err)
+def draw_tags(x, y):
+        NetworkTables.getTable("SmartDashboard").putNumber("X", x)
+        NetworkTables.getTable("SmartDashboard").putNumber("Y", y)
