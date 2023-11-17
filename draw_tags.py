@@ -1,11 +1,11 @@
 import numpy as np
 import cv2 as cv
 
-def draw_tags(
-    image,
-    tags,
-    elapsed_time,
-):
+def draw_tags(image, tags, elapsed_time,):
+    '''
+    Input: original unmodified frame image, tag data, time
+    Output: rendered image with apriltag overlay
+    '''
     for tag in tags:
         tag_family = tag.tag_family
         tag_id = tag.tag_id
@@ -31,7 +31,7 @@ def draw_tags(
         cv.line(image, (corner_04[0], corner_04[1]),
                 (corner_01[0], corner_01[1]), (0, 255, 0), 2)
 
-       # tag name
+        # tag name
         cv.putText(image, str(tag_id), (center[0] - 10, center[1] - 10),
                    cv.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2, cv.LINE_AA)
 

@@ -28,7 +28,7 @@ def detect_tags(frame, camera_params = [862.80475869, 850.06137657, 533.8004744,
             cv.cvtColor(frame, cv.COLOR_BGR2GRAY),
             estimate_tag_pose=True,
             camera_params=camera_params,
-            tag_size=8*0.0254,
+            tag_size=6*0.0254,
         )
     # Returns
     return tags
