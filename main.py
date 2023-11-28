@@ -11,7 +11,7 @@ import pylab as plt
 # Python imports
 from detect_tags import detect_tags, filter_tags
 from draw_tags import draw_tags
-from estimate_pose import estimate_pose, is_tag_valid
+from estimate_pose_test import estimate_pose, is_tag_valid, get_xyz
 
 
 # Opens opencv video capture object
@@ -24,7 +24,7 @@ from matplotlib import pyplot as plt
 import pygame
 
 pygame.init()
-size = width, height = 16*40, 10*40
+size = width, height = 20*40, 20*40
 screen = pygame.display.set_mode(size)
 position=[0,0]
 white=[255,255,255]
@@ -49,20 +49,29 @@ while(True):
 
     if len(filtered_tags) > 0 and is_tag_valid(tag=filtered_tags[0]):
 
-        # Estimates pose
-        global_to_camera = estimate_pose(filtered_tags[0])
+        #print(filtered_tags)
 
-        # Pygame DRAW
-        X = global_to_camera[0,3]
-        Y = global_to_camera[1,3]
+        translation = filtered_tags[0].pose_t
 
-        position[0] = X*40
-        position[1] = Y*40
+        #print(translation[0][0], translation[1][0], translation[2][0])
+
+        
+        # Gets pose
+        #global_to_camera = estimate_pose(filtered_tags[0])
+        #X, Y, Z = get_xyz(global_to_camera)
+
+        X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
+
+        position[0] = Y*300 + 400
+        position[1] = Z*300 + 400
+
+        print(str(X)[:5], str(Y)[:5], str(Z)[:5])
                     
         screen.fill(white)
 
         pygame.draw.circle(screen,[255,0,0],position,5,5)
         pygame.display.flip()
+        
 
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
