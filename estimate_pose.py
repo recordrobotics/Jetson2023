@@ -85,11 +85,19 @@ def estimate_pose(tag):
     camera_to_tag = get_transformation_matrix(tag.pose_R, tag.pose_t)
     tag_to_camera = np.linalg.inv(camera_to_tag)
 
+    #TODO: currently a placeholder for the transformation from camera to robot
+    robot_to_camera_rotation = np.array([[1, 0, 0],
+                                         [0, 1, 0],
+                                         [0, 0, 1]])
+    robot_to_camera_translation = np.array([[0, 0, 0]]).T
+    robot_to_camera = get_transformation_matrix(camera_to_robot_rotation, camera_to_robot_translation)
+    camera_to_robot = np.linalg.inv(robot_to_camera)
+
     # Combines to get global to camera
-    global_to_camera = np.matmul(tag_to_camera, global_to_tag)
+    global_to_robot = np.matmul(np.matmul(global_to_tag, tag_to_camera), camera_to_robot)
 
     # Returns
-    return global_to_camera
+    return global_to_robot
 
 
 
