@@ -38,10 +38,12 @@ while(True):
     # Detects tags
     tags = detect_tags(frame)
     filtered_tags = filter_tags(tags)
+
+    print(tags)
     
     # draw apriltag locations
     filtered_image = draw_tags(frame, filtered_tags, time.time() - start_time)
-    cv.imshow('frame', filtered_image) # Puts on opencv display
+    cv.imshow('filtered image', filtered_image) # Puts on opencv display
 
     for event in pygame.event.get():
             if event.type == pygame.QUIT:

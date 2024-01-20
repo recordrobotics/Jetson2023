@@ -22,6 +22,7 @@ def get_transformation_matrix(rotation_matrix, translation_matrix):
     return n2
 
 
+
 # Rotational matrix that does nothing
 no_rotation = np.array([[0,-1,0],
                         [0,0,1],
