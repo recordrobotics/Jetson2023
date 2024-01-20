@@ -14,7 +14,10 @@ from estimate_pose_test import estimate_pose, is_tag_valid, get_xyz
 
 
 # Opens opencv video capture object
-cap = cv.VideoCapture(1)
+#cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(1, cv.CAP_DSHOW) # this is the magic!
+cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 start_time = time.time()
 
 
@@ -29,7 +32,7 @@ position=[0,0]
 white=[255,255,255]
 
     
-while(True):
+while True:
 
     # Gets frame
     ret, frame = cap.read()
@@ -48,7 +51,6 @@ while(True):
 
     if len(filtered_tags) > 0 and is_tag_valid(tag=filtered_tags[0]):
 
-        #print(filtered_tags)
 
         translation = filtered_tags[0].pose_t
 
@@ -56,20 +58,22 @@ while(True):
 
         
         # Gets pose
-        global_to_camera = estimate_pose(filtered_tags[0])
-        X, Y, Z = get_xyz(global_to_camera)
+        #global_to_camera = estimate_pose(filtered_tags[0])
+        #X, Y, Z = get_xyz(global_to_camera)
 
-        #X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
+        #print(str(X)[:5], str(Y)[:5], str(Z)[:5])
 
-        position[0] = Z*300 + 400
-        position[1] = X*300 + 400
 
+        X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
         print(str(X)[:5], str(Y)[:5], str(Z)[:5])
-                    
-        screen.fill(white)
 
-        pygame.draw.circle(screen,[255,0,0],position,5,5)
-        pygame.display.flip()
+        #position[0] = Z*300 + 400
+        #position[1] = X*300 + 400
+
+        #screen.fill(white)
+
+        #pygame.draw.circle(screen,[255,0,0],position,5,5)
+        #pygame.display.flip()
         
 
     if cv.waitKey(1) & 0xFF == ord('q'):
