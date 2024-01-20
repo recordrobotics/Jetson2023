@@ -6,8 +6,7 @@ import logging
 import math
 import time
 from pupil_apriltags import Detector
-import matplotlib
-import pylab as plt
+
 # Python imports
 from detect_tags import detect_tags, filter_tags
 from draw_tags import draw_tags
