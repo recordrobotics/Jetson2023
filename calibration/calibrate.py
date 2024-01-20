@@ -13,7 +13,8 @@ objp[:,:2] = np.mgrid[0:7,0:6].T.reshape(-1,2)
 # Arrays to store object points and image points from all the images.
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
-images = glob.glob('calibration_images\\*.jpg')
+images = glob.glob('calibration\\calibration_images\\*.jpg')
+
 
 for fname in images:
     img = cv.imread(fname, cv.IMREAD_COLOR)
@@ -48,7 +49,7 @@ for fname in images:
 ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
 
-img = cv.imread('calibration_images\WIN_20231106_19_58_14_Pro.jpg')
+#img = cv.imread('calibration_images\WIN_20231106_19_58_14_Pro.jpg')
 h,  w = img.shape[:2]
 newcameramtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
 

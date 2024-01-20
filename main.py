@@ -59,7 +59,9 @@ while(True):
         global_to_camera = estimate_pose(filtered_tags[0])
         X, Y, Z = get_xyz(global_to_camera)
 
-        #X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
+        #X,Y,Z = translation
+
+        X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
 
         position[0] = Z*300 + 400
         position[1] = X*300 + 400

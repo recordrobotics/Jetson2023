@@ -22,8 +22,9 @@ at_detector = Detector(
 
 # Function that takes in a camera frame and returns tag data
 #def detect_tags(frame, camera_params = [862.80475869, 850.06137657, 533.8004744, 423.2742388]):
-def detect_tags(frame, camera_params = [850.06137657, 862.80475869, 423.2742388, 533.8004744]):
+#def detect_tags(frame, camera_params = [850.06137657, 862.80475869, 423.2742388, 533.8004744]):
 #def detect_tags(frame, camera_params = [862.80475869, 850.06137657, 533.8004744, 423.2742388]):
+def detect_tags(frame, camera_params = [862.80475869, 533.8004744, 850.06137657, 423.2742388]):
 
 
     # Gets all detected apriltags
@@ -38,7 +39,7 @@ def detect_tags(frame, camera_params = [850.06137657, 862.80475869, 423.2742388,
 
 
 # Function that takes in a "tags" object and returns only the tags that the camera is confident in
-def filter_tags(tags, DECISION_MARGIN_THRESHOLD = 40):
+def filter_tags(tags, DECISION_MARGIN_THRESHOLD = 10):
     # Gets a list
     filtered_tags = [tag for tag in tags if tag.decision_margin > DECISION_MARGIN_THRESHOLD]
     # Returns filtered tags

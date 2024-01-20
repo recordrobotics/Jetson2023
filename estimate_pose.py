@@ -46,7 +46,7 @@ tag_locations = {
 }
 '''
 
-'''
+
 # Don't ask. I'm not proud of it
 global_to_tag_transformations = {
     1: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 1.071626, 0.462788]]).T),
@@ -58,8 +58,8 @@ global_to_tag_transformations = {
     7: get_transformation_matrix(no_rotation, np.array([[1.02743, 2.748026, 0.462788]]).T),
     8: get_transformation_matrix(no_rotation, np.array([[1.02743, 1.071626, 0.462788]]).T),
 }
-'''
 
+'''
 global_to_tag_transformations = {
     1: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 1.071626, 0.462788]]).T),
     2: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 2.748026, 0.462788]]).T),
@@ -70,6 +70,7 @@ global_to_tag_transformations = {
     7: get_transformation_matrix(no_rotation, np.array([[1.02743, 2.748026, 0.462788]]).T),
     8: get_transformation_matrix(no_rotation, np.array([[1.02743, 1.071626, 0.462788]]).T),
 }
+'''
 
 def estimate_pose(tag):
     '''
