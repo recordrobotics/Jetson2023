@@ -1,6 +1,5 @@
 # Imports
 import math
-import pose3d
 import numpy as np
 
 

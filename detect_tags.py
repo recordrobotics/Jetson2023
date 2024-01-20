@@ -10,7 +10,7 @@ from pupil_apriltags import Detector
 
 # Creates a detector object from pupil_apriltags
 at_detector = Detector(
-    families="tag16h5", #tag36h11
+    families="tag16h5",
     nthreads=1,
     quad_decimate=1.0,
     quad_sigma=0.0,
@@ -22,9 +22,9 @@ at_detector = Detector(
 
 # Function that takes in a camera frame and returns tag data
 #def detect_tags(frame, camera_params = [862.80475869, 850.06137657, 533.8004744, 423.2742388]):
-def detect_tags(frame, camera_params = [850.06137657, 862.80475869, 423.2742388, 533.8004744]):
+#def detect_tags(frame, camera_params = [850.06137657, 862.80475869, 423.2742388, 533.8004744]):
+def detect_tags(frame, camera_params = [1247.4338959053719, 1245.751864737856, 638.5472291838764, 344.40308569046823]): # for specifically 720x1280
 #def detect_tags(frame, camera_params = [862.80475869, 850.06137657, 533.8004744, 423.2742388]):
-
 
     # Gets all detected apriltags
     tags = at_detector.detect(
@@ -36,6 +36,7 @@ def detect_tags(frame, camera_params = [850.06137657, 862.80475869, 423.2742388,
     # Returns
     return tags
 
+    
 
 
 # Function that takes in a "tags" object and returns only the tags that the camera is confident in
@@ -47,20 +48,16 @@ def filter_tags(tags, DECISION_MARGIN_THRESHOLD = 20):
 
 
 
-
-
-
-
-
 if __name__ == "__main__":
 
     # Opens opencv video capture object
     cap = cv.VideoCapture(1)
 
     from draw_tags import draw_tags
-    #from networktables import NetworkTables
 
-    while(True):
+    while True:
+        # Imports
+        #from networktables import NetworkTables
         start_time = time.time()
 
         # Gets frame
@@ -74,7 +71,7 @@ if __name__ == "__main__":
         filtered_tags = filter_tags(tags)
     
         # draw apriltag locations
-        debug_image = draw_tags(frame, filtered_tags, time.time() - start_time)
+        debug_image = draw_tags(frame, tags, time.time() - start_time)
 
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
