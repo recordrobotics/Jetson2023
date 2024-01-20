@@ -62,10 +62,10 @@ global_to_tag_transformations = {
 
 global_to_tag_transformations = {
     1: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 1.071626, 0.462788]]).T),
-    2: get_transformation_matrix(rotation_by_pi, np.array([[0, 0, 0.462788]]).T),
+    2: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 2.748026, 0.462788]]).T),
     3: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 4.424426, 0.462788]]).T),
     4: get_transformation_matrix(rotation_by_pi, np.array([[16.178784, 6.749796, 0.695452]]).T),
-    5: get_transformation_matrix(no_rotation, np.array([[0.36195, 6.749796, 0.695452]]).T),
+    5: get_transformation_matrix(no_rotation, np.array([[0, 0, 0]]).T),
     6: get_transformation_matrix(no_rotation, np.array([[1.02743, 4.424426, 0.462788]]).T),
     7: get_transformation_matrix(no_rotation, np.array([[1.02743, 2.748026, 0.462788]]).T),
     8: get_transformation_matrix(no_rotation, np.array([[1.02743, 1.071626, 0.462788]]).T),
@@ -85,7 +85,7 @@ def estimate_pose(tag):
     tag_to_camera = np.linalg.inv(camera_to_tag)
 
     # Combines to get global to camera
-    global_to_camera = np.matmul(tag_to_camera, global_to_tag)
+    global_to_camera = np.matmul(global_to_tag, tag_to_camera)
 
     # Returns
     return global_to_camera

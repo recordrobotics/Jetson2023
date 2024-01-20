@@ -56,13 +56,13 @@ while(True):
 
         
         # Gets pose
-        #global_to_camera = estimate_pose(filtered_tags[0])
-        #X, Y, Z = get_xyz(global_to_camera)
+        global_to_camera = estimate_pose(filtered_tags[0])
+        X, Y, Z = get_xyz(global_to_camera)
 
-        X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
+        #X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
 
-        position[0] = Y*300 + 400
-        position[1] = Z*300 + 400
+        position[0] = Z*300 + 400
+        position[1] = X*300 + 400
 
         print(str(X)[:5], str(Y)[:5], str(Z)[:5])
                     
