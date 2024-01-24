@@ -10,7 +10,7 @@ from pupil_apriltags import Detector
 
 # Creates a detector object from pupil_apriltags
 at_detector = Detector(
-    families="tag16h5",
+    families="tag36h11",
     nthreads=1,
     quad_decimate=1.0,
     quad_sigma=0.0,
