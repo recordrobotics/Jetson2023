@@ -25,7 +25,7 @@ from matplotlib import pyplot as plt
 import pygame
 
 pygame.init()
-size = width, height = 20*40, 20*40
+size = width, height = 13.7986 * 100, 8.2106*100
 screen = pygame.display.set_mode(size)
 position=[0,0]
 white=[255,255,255]
@@ -67,8 +67,8 @@ while True:
         print(str(X)[:6], str(Y)[:6], str(Z)[:6])#                             UNCOMMENT FOR TRANSLATION
         #print(global_to_robot)
 
-        position[0] = Z*40 + 400
-        position[1] = X*40 + 400
+        position[0] = Z*100
+        position[1] = X*100
 
         screen.fill(white)
 
