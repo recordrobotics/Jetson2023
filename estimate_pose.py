@@ -56,7 +56,7 @@ tag_locations = {
 
 # Don't ask. I'm not proud of it
 global_to_tag_transformations = {
-    1: get_transformation_matrix(rotation_by_pi_alt, np.array([[1.071626, 0.462788, 15.513558]]).T),#values changed for test
+    1: get_transformation_matrix(no_rotation, np.array([[1.071626, 0.462788, 15.513558]]).T),#values changed for test
     2: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 2.748026, 0.462788]]).T),
     3: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 4.424426, 0.462788]]).T),
     4: get_transformation_matrix(rotation_by_pi, np.array([[16.178784, 6.749796, 0.695452]]).T),
