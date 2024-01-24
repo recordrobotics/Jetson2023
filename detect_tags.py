@@ -23,9 +23,10 @@ at_detector = Detector(
 # Function that takes in a camera frame and returns tag data
 #def detect_tags(frame, camera_params = [862.80475869, 850.06137657, 533.8004744, 423.2742388]):
 #def detect_tags(frame, camera_params = [850.06137657, 862.80475869, 423.2742388, 533.8004744]):
-def detect_tags(frame, camera_params = [1247.4338959053719, 1245.751864737856, 638.5472291838764, 344.40308569046823]): # for specifically 720x1280
+#def detect_tags(frame, camera_params = [1247.4338959053719, 1245.751864737856, 638.5472291838764, 344.40308569046823]): # for specifically 720x1280
 #def detect_tags(frame, camera_params = [862.80475869, 850.06137657, 533.8004744, 423.2742388]):
 #def detect_tags(frame, camera_params = [862.80475869, 533.8004744, 850.06137657, 423.2742388]):
+def detect_tags(frame, camera_params = [974.0498583455678, 976.3940791537633, 668.6984029057994, 357.7159502344977]): # pete laptop at 720x1280
 
     # Gets all detected apriltags
     tags = at_detector.detect(

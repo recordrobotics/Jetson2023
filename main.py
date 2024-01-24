@@ -10,12 +10,13 @@ from pupil_apriltags import Detector
 # Python imports
 from detect_tags import detect_tags, filter_tags
 from draw_tags import draw_tags
-from estimate_pose_test import estimate_pose, is_tag_valid, get_xyz
+from estimate_pose import estimate_pose
+from estimate_pose_test import is_tag_valid, get_xyz
 
 
 # Opens opencv video capture object
 #cap = cv.VideoCapture(1)
-cap = cv.VideoCapture(1, cv.CAP_DSHOW) # this is the magic!
+cap = cv.VideoCapture(0, cv.CAP_DSHOW) # this is the magic!
 cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 start_time = time.time()
@@ -58,14 +59,14 @@ while True:
 
         
         # Gets pose
-        #global_to_camera = estimate_pose(filtered_tags[0])
-        #X, Y, Z = get_xyz(global_to_camera)
+        global_to_camera = estimate_pose(filtered_tags[0])
+        X, Y, Z = get_xyz(global_to_camera)
 
         #print(str(X)[:5], str(Y)[:5], str(Z)[:5])
 
 
-        X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
-        print(str(X)[:5], str(Y)[:5], str(Z)[:5])
+        #X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
+        print(str(X)[:5], str(Y)[:5], str(Z)[:5])#                                  UNCOMMENT THIS AGAIN
 
         #position[0] = Z*300 + 400
         #position[1] = X*300 + 400

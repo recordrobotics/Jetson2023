@@ -10,6 +10,9 @@ def get_transformation_matrix(rotation_matrix, translation_matrix):
     Output: transformation matrix
     '''
 
+    #change translation to work after rotation
+    translation_matrix = np.matmul(rotation_matrix, translation_matrix)#                    EXPERIMENTAL ADDITION
+
     # Creates a matrix that is a concatenated rotation next to translation
     n1 = np.concatenate((rotation_matrix, translation_matrix), axis=1)
 
@@ -32,6 +35,10 @@ rotation_by_pi = np.array([[-1,0,0],
                            [0,-1,0],
                            [0,0,1]])
 
+rotation_by_pi_alt = np.array([[1,0,0],
+                               [0,-1,0],
+                               [0,0,-1]])
+
 # Tag locations and rotations along field
 '''
 tag_locations = {
@@ -49,7 +56,7 @@ tag_locations = {
 
 # Don't ask. I'm not proud of it
 global_to_tag_transformations = {
-    1: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 1.071626, 0.462788]]).T),
+    1: get_transformation_matrix(rotation_by_pi_alt, np.array([[1.071626, 0.462788, 15.513558]]).T),#values changed for test
     2: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 2.748026, 0.462788]]).T),
     3: get_transformation_matrix(rotation_by_pi, np.array([[15.513558, 4.424426, 0.462788]]).T),
     4: get_transformation_matrix(rotation_by_pi, np.array([[16.178784, 6.749796, 0.695452]]).T),
@@ -80,13 +87,17 @@ def estimate_pose(tag):
 
     # Gets transformation matrix for global to apriltag
     global_to_tag = global_to_tag_transformations[tag.tag_id]
+    #print("g to t" + global_to_tag)
 
     # Gets tag to camera by inverting camera to tag
     camera_to_tag = get_transformation_matrix(tag.pose_R, tag.pose_t)
+    #print("c to t" + camera_to_tag)
     tag_to_camera = np.linalg.inv(camera_to_tag)
+    #print("t to c" + tag_to_camera)
 
     # Combines to get global to camera
     global_to_camera = np.matmul(global_to_tag, tag_to_camera)
+    #print("g to c" + global_to_camera)
 
     # Returns
     return global_to_camera
