@@ -95,12 +95,24 @@ def estimate_pose(tag):
     tag_to_camera = np.linalg.inv(camera_to_tag)
     #print("t to c" + tag_to_camera)
 
+    #position of camera in robot frame
+    robot_to_camera = np.array([[1, 0, 0, 0],
+                                [0, 1, 0, 0],
+                                [0, 0, 1, 0],
+                                [0, 0, 0, 1]])#TODO: PLACEHOLDER VALUES
+    
+    #position of robot in camera frame
+    camera_to_robot = np.linalg.inv(robot_to_camera)
+
     # Combines to get global to camera
     global_to_camera = np.matmul(global_to_tag, tag_to_camera)
     #print("g to c" + global_to_camera)
 
+    # Combines to get global to robot
+    global_to_robot = np.matmul(global_to_camera, camera_to_robot)
+
     # Returns
-    return global_to_camera
+    return global_to_robot
 
 
 
@@ -112,7 +124,14 @@ def is_tag_valid(tag):
 
     return tag.tag_id in global_to_tag_transformations.keys()
 
+def get_xyz(global_to_camera):
 
+    # Pygame DRAW
+    X = global_to_camera[0,3]
+    Y = global_to_camera[1,3]
+    Z = global_to_camera[2,3]
+
+    return (X, Y, Z)
 
 #####################################
 if __name__ == "__main__":
