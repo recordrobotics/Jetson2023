@@ -113,7 +113,7 @@ global_to_tag_transformations = {
     4: get_transformation_matrix(rotation_by_180d, np.array([[5.5479, 1.4511, 16.5793]]).T),
     5: get_transformation_matrix(rotation_by_270d, np.array([[8.2042, 1.3559, 14.7008]]).T),
     6: get_transformation_matrix(rotation_by_270d, np.array([[8.2042, 1.3559, 1.8415]]).T),
-    7: get_transformation_matrix(no_rotation, np.array([[5.5479, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
+    7: get_transformation_matrix(np.matmul(flip_z, no_rotation), np.array([[5.5479, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
     8: get_transformation_matrix(no_rotation, np.array([[4.9827, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
     9: get_transformation_matrix(rotation_by_60d, np.array([[0.8837, 1.3559, 0.3561]]).T),
     10: get_transformation_matrix(rotation_by_60d, np.array([[0.2459, 1.3559, 1.4615]]).T),
