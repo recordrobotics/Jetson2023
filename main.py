@@ -70,7 +70,7 @@ while True:
 
         screen.fill(white)
 
-        pygame.draw.circle(screen,[255,0,0],position,5,5)
+        pygame.draw.circle(screen,[255,0,0],position,10,10)
         pygame.display.flip()
         
 
