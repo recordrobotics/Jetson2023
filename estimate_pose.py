@@ -84,10 +84,13 @@ rotation_by_240d = np.array([[-0.5, 0, -0.8660254],
                              [0, 1, 0],
                              [0.8660254, 0, -0.5]])
 
-# Rotation matrix for flipping across x
+# Rotation matrix for flipping z
 flip_z = np.array([[1, 0, 0],
                    [0, 1, 0],
                    [0, 0, -1]])
+
+# Transformation matrix for flipping z
+flip_z_transform = get_transformation_matrix(flip_z, np.array([[0, 0, 0]]).T)
 
 # test tag is tag 1. data from last year
 '''global_to_tag_transformations_2023 = {
@@ -104,10 +107,9 @@ flip_z = np.array([[1, 0, 0],
 
 '''
 All distances are in meters. 
-Rotation matrices are a reflection of the orientation of the tag: a tag with orientation 120 degrees corresponds to -240 degrees, etc.
 '''
 global_to_tag_transformations = {
-    1: get_transformation_matrix(rotation_by_120d, np.array([[0.2459, 1.3559, 15.0795]]).T),#rotation_by_120d
+    1: get_transformation_matrix(np.matmul(flip_z, rotation_by_120d), np.array([[0.2459, 1.3559, 15.0795]]).T),#rotation_by_120d
     2: get_transformation_matrix(rotation_by_120d, np.array([[0.8837, 1.3559, 16.1851]]).T),
     3: get_transformation_matrix(rotation_by_180d, np.array([[4.9827, 1.4511, 16.5793]]).T),
     4: get_transformation_matrix(rotation_by_180d, np.array([[5.5479, 1.4511, 16.5793]]).T),
