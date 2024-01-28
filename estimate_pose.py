@@ -113,10 +113,11 @@ flip_z_transform = get_transformation_matrix(flip_z, np.array([[0, 0, 0]]).T)
 '''
 All distances are in meters.
 The algebra below looks very questionable, but it works, so we're not going to question it 
+z is flipped because the z axis in the tag frame is INTO the tag
 '''
 global_to_tag_transformations = {
-    1: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_120d), np.array([[0.2459, 1.3559, 15.0795]]).T),
-    2: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_120d), np.array([[0.8837, 1.3559, 16.1851]]).T),
+    1: get_transformation_matrix(np.matmul(flip_z, rotation_by_120d), np.array([[0.2459, 1.3559, 15.0795]]).T),
+    2: get_transformation_matrix(np.matmul(flip_z, rotation_by_120d), np.array([[0.8837, 1.3559, 16.1851]]).T),
     3: get_transformation_matrix(rotation_by_180d, np.array([[4.9827, 1.4511, 16.5793]]).T),
     4: get_transformation_matrix(rotation_by_180d, np.array([[5.5479, 1.4511, 16.5793]]).T),
     5: get_transformation_matrix(rotation_by_270d, np.array([[8.2042, 1.3559, 14.7008]]).T),

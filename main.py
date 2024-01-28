@@ -58,10 +58,10 @@ while True:
         
         # Gets pose
         global_to_robot = estimate_pose(filtered_tags[0])
-        X, Y, Z = get_xyz(global_to_robot)
+        #X, Y, Z = get_xyz(global_to_robot)
 
 
-        #X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
+        X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
         print(str(X)[:6], str(Y)[:6], str(Z)[:6])#                             UNCOMMENT FOR TRANSLATION
         #print(global_to_robot)
 
