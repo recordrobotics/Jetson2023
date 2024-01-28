@@ -107,22 +107,22 @@ All distances are in meters.
 Rotation matrices are a reflection of the orientation of the tag: a tag with orientation 120 degrees corresponds to -240 degrees, etc.
 '''
 global_to_tag_transformations = {
-    1: get_transformation_matrix(np.matmul(flip_z, rotation_by_120d), np.array([[0.2459, 1.3559, 15.0795]]).T),#rotation_by_120d
-    2: get_transformation_matrix_rotate_t(rotation_by_120d, np.array([[0.8837, 1.3559, 16.1851]]).T),
-    3: get_transformation_matrix_rotate_t(rotation_by_180d, np.array([[4.9827, 1.4511, 16.5793]]).T),
-    4: get_transformation_matrix_rotate_t(rotation_by_180d, np.array([[5.5479, 1.4511, 16.5793]]).T),
-    5: get_transformation_matrix_rotate_t(rotation_by_270d, np.array([[8.2042, 1.3559, 14.7008]]).T),
-    6: get_transformation_matrix_rotate_t(rotation_by_270d, np.array([[8.2042, 1.3559, 1.8415]]).T),
-    7: get_transformation_matrix_rotate_t(np.matmul(flip_z, no_rotation), np.array([[5.5479, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
-    8: get_transformation_matrix_rotate_t(no_rotation, np.array([[4.9827, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
-    9: get_transformation_matrix_rotate_t(rotation_by_60d, np.array([[0.8837, 1.3559, 0.3561]]).T),
-    10: get_transformation_matrix_rotate_t(rotation_by_60d, np.array([[0.2459, 1.3559, 1.4615]]).T),
-    11: get_transformation_matrix_rotate_t(rotation_by_60d, np.array([[3.7132, 1.3208, 11.9047]]).T),
-    12: get_transformation_matrix_rotate_t(rotation_by_300d, np.array([[4.4983, 1.3208, 11.9047]]).T),
-    13: get_transformation_matrix_rotate_t(rotation_by_180d, np.array([[4.1051, 1.3208, 11.2202]]).T),
-    14: get_transformation_matrix_rotate_t(no_rotation, np.array([[4.1051, 1.3208, 5.3208]]).T),
-    15: get_transformation_matrix_rotate_t(rotation_by_120d, np.array([[1.3208, 4.6413, 4.4983]]).T),
-    16: get_transformation_matrix_rotate_t(rotation_by_240d, np.array([[3.7132, 4.6413, 4.4983]]).T)
+    1: get_transformation_matrix(rotation_by_120d, np.array([[0.2459, 1.3559, 15.0795]]).T),#rotation_by_120d
+    2: get_transformation_matrix(rotation_by_120d, np.array([[0.8837, 1.3559, 16.1851]]).T),
+    3: get_transformation_matrix(rotation_by_180d, np.array([[4.9827, 1.4511, 16.5793]]).T),
+    4: get_transformation_matrix(rotation_by_180d, np.array([[5.5479, 1.4511, 16.5793]]).T),
+    5: get_transformation_matrix(rotation_by_270d, np.array([[8.2042, 1.3559, 14.7008]]).T),
+    6: get_transformation_matrix(rotation_by_270d, np.array([[8.2042, 1.3559, 1.8415]]).T),
+    7: get_transformation_matrix(no_rotation, np.array([[5.5479, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
+    8: get_transformation_matrix(no_rotation, np.array([[4.9827, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
+    9: get_transformation_matrix(rotation_by_60d, np.array([[0.8837, 1.3559, 0.3561]]).T),
+    10: get_transformation_matrix(rotation_by_60d, np.array([[0.2459, 1.3559, 1.4615]]).T),
+    11: get_transformation_matrix(rotation_by_60d, np.array([[3.7132, 1.3208, 11.9047]]).T),
+    12: get_transformation_matrix(rotation_by_300d, np.array([[4.4983, 1.3208, 11.9047]]).T),
+    13: get_transformation_matrix(rotation_by_180d, np.array([[4.1051, 1.3208, 11.2202]]).T),
+    14: get_transformation_matrix(no_rotation, np.array([[4.1051, 1.3208, 5.3208]]).T),
+    15: get_transformation_matrix(rotation_by_120d, np.array([[1.3208, 4.6413, 4.4983]]).T),
+    16: get_transformation_matrix(rotation_by_240d, np.array([[3.7132, 4.6413, 4.4983]]).T)
 }
 
 

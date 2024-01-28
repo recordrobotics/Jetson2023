@@ -64,8 +64,8 @@ while True:
 
 
         #X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
-        print(str(X)[:6], str(Y)[:6], str(Z)[:6])#                             UNCOMMENT FOR TRANSLATION
-        #print(global_to_robot)
+        #print(str(X)[:6], str(Y)[:6], str(Z)[:6])#                             UNCOMMENT FOR TRANSLATION
+        print(global_to_robot)
 
         position[0] = Z*100
         position[1] = X*100
