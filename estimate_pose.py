@@ -95,6 +95,11 @@ flip_x = np.array([[-1, 0, 0],
                    [0, 1, 0],
                    [0, 0, 1]])
 
+# Rotation matrix for rotating around y by 90 degrees
+rotation_by_90d = np.array([[0, 0, 1],
+                            [0, 1, 0],
+                            [-1, 0, 0]])
+
 # Transformation matrix for flipping z
 flip_z_transform = get_transformation_matrix(flip_z, np.array([[0, 0, 0]]).T)
 
@@ -116,24 +121,25 @@ All distances are in meters.
 The algebra below looks questionable, but that is because some adjustments were necessary to take into account the strange tag frame
 z is flipped because the z axis in the tag frame is INTO the tag
 To place the origin in the top left, the x coordinate of tag 6 was taken as the x coordinate of the origin
+orientations of the tags in the original frame were subtracted from 360 degrees to get their orientation in the flipped frame
 '''
 global_to_tag_transformations = {
-    1: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_120d), np.array([[8.2042 - 0.2459, 1.3559, 15.0795]]).T),#TODO: the x value is returning negative; this doesn't make sense
-    2: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_120d), np.array([[8.2042 - 0.8837, 1.3559, 16.1851]]).T),#TODO: does the x axis in the rotation still need to be flipped?
-    3: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_180d), np.array([[8.2042 - 4.9827, 1.4511, 16.5793]]).T),
-    4: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_180d), np.array([[8.2042 - 5.5479, 1.4511, 16.5793]]).T),
-    5: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_270d), np.array([[8.2042 - 8.2042, 1.3559, 14.7008]]).T),
-    6: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_270d), np.array([[8.2042 - 8.2042, 1.3559, 1.8415]]).T),
-    7: get_transformation_matrix(np.matmul(rotation_by_180d, no_rotation), np.array([[8.2042 - 5.5479, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
-    8: get_transformation_matrix(np.matmul(rotation_by_180d, no_rotation), np.array([[8.2042 - 4.9827, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
-    9: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_60d), np.array([[8.2042 - 0.8837, 1.3559, 0.3561]]).T),
-    10: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_60d), np.array([[8.2042 - 0.2459, 1.3559, 1.4615]]).T),
-    11: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_60d), np.array([[8.2042 - 3.7132, 1.3208, 11.9047]]).T),
-    12: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_300d), np.array([[8.2042 - 4.4983, 1.3208, 11.9047]]).T),
-    13: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_180d), np.array([[8.2042 - 4.1051, 1.3208, 11.2202]]).T),
-    14: get_transformation_matrix(np.matmul(rotation_by_180d, no_rotation), np.array([[8.2042 - 4.1051, 1.3208, 5.3208]]).T),
-    15: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_120d), np.array([[8.2042 - 1.3208, 4.6413, 4.4983]]).T),
-    16: get_transformation_matrix(np.matmul(rotation_by_180d, rotation_by_240d), np.array([[8.2042 - 3.7132, 4.6413, 4.4983]]).T)
+    1: get_transformation_matrix(rotation_by_240d, np.array([[8.2042 - 0.2459, 1.3559, 15.0795]]).T),
+    2: get_transformation_matrix(rotation_by_240d, np.array([[8.2042 - 0.8837, 1.3559, 16.1851]]).T),
+    3: get_transformation_matrix(rotation_by_180d, np.array([[8.2042 - 4.9827, 1.4511, 16.5793]]).T),
+    4: get_transformation_matrix(rotation_by_180d, np.array([[8.2042 - 5.5479, 1.4511, 16.5793]]).T),
+    5: get_transformation_matrix(rotation_by_90d, np.array([[8.2042 - 8.2042, 1.3559, 14.7008]]).T),
+    6: get_transformation_matrix(rotation_by_90d, np.array([[8.2042 - 8.2042, 1.3559, 1.8415]]).T),
+    7: get_transformation_matrix(no_rotation, np.array([[8.2042 - 5.5479, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
+    8: get_transformation_matrix(no_rotation, np.array([[8.2042 - 4.9827, 1.4511, -0.0381]]).T),# the negative is intentional - the tag is set back
+    9: get_transformation_matrix(rotation_by_300d, np.array([[8.2042 - 0.8837, 1.3559, 0.3561]]).T),
+    10: get_transformation_matrix(rotation_by_300d, np.array([[8.2042 - 0.2459, 1.3559, 1.4615]]).T),
+    11: get_transformation_matrix(rotation_by_60d, np.array([[8.2042 - 3.7132, 1.3208, 11.9047]]).T),
+    12: get_transformation_matrix(rotation_by_300d, np.array([[8.2042 - 4.4983, 1.3208, 11.9047]]).T),
+    13: get_transformation_matrix(rotation_by_180d, np.array([[8.2042 - 4.1051, 1.3208, 11.2202]]).T),
+    14: get_transformation_matrix(no_rotation, np.array([[8.2042 - 4.1051, 1.3208, 5.3208]]).T),
+    15: get_transformation_matrix(rotation_by_240d, np.array([[8.2042 - 1.3208, 4.6413, 4.4983]]).T),
+    16: get_transformation_matrix(rotation_by_120d, np.array([[8.2042 - 3.7132, 4.6413, 4.4983]]).T)
 }
 
 
@@ -146,13 +152,10 @@ def estimate_pose(tag):
 
     # Gets transformation matrix for global to apriltag
     global_to_tag = global_to_tag_transformations[tag.tag_id]
-    #print("g to t" + global_to_tag)
 
     # Gets tag to camera by inverting camera to tag
-    camera_to_tag = get_transformation_matrix(tag.pose_R, tag.pose_t)
-    #print("c to t" + camera_to_tag)
+    camera_to_tag = get_transformation_matrix(np.matmul(rotation_by_180d, tag.pose_R), tag.pose_t)
     tag_to_camera = np.linalg.inv(camera_to_tag)
-    #print("t to c" + tag_to_camera)
 
     #position of camera in robot frame
     robot_to_camera = np.array([[1, 0, 0, 0],
@@ -165,7 +168,6 @@ def estimate_pose(tag):
 
     # Combines to get global to camera
     global_to_camera = np.matmul(global_to_tag, tag_to_camera)
-    #print("g to c" + global_to_camera)
 
     # Combines to get global to robot
     global_to_robot = np.matmul(global_to_camera, camera_to_robot)
