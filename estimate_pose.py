@@ -165,10 +165,10 @@ def convert_for_export(global_pose):
     '''
     r =  Rotation.from_matrix(global_pose[:3, :3])
     # angles are euler angles in RADIANS
-    angles = 2 * math.pi - r.as_euler("xyz")
+    angles = r.as_euler("xyz")
     x = global_pose[2,3]
     y = 8.2042 - global_pose[0, 3]
-    pose = np.array([x, y, r[1]])
+    pose = np.array([x, y, 2 * math.pi - r[1]])
     return pose
 
 
