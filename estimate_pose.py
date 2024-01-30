@@ -1,6 +1,7 @@
 # Imports
 import math
 import numpy as np
+from scipy.spatial.transform import Rotation
 
 
 
@@ -21,39 +22,10 @@ def get_transformation_matrix(rotation_matrix, translation_matrix):
     return n2
 
 
-def get_transformation_matrix_rotate_t(rotation_matrix, translation_matrix):
-    '''
-    Input: rotation & translation matrix
-    Output: transformation matrix
-    applies the rotation to the translation matrix
-    '''
-
-    #change translation to work after rotation
-    translation_matrix = np.matmul(np.linalg.inv(rotation_matrix), translation_matrix)#                    EXPERIMENTAL ADDITION
-
-    # Creates a matrix that is a concatenated rotation next to translation
-    n1 = np.concatenate((rotation_matrix, translation_matrix), axis=1)
-
-    # Adds horizonal array of 0's below the existing matrix
-    horizontal_array = np.array([[0,0,0,1]])
-    n2 = np.concatenate((n1, horizontal_array), axis=0)
-
-    # Returns
-    return n2
-
-
-
 # Rotation matrix that does nothing
 no_rotation = np.array([[1,0,0],
                         [0,1,0],
                         [0,0,1]])
-
-# Rotation matrix that rotates around z axis by pi 
-'''
-rotation_by_pi_z = np.array([[-1,0,0],
-                           [0,-1,0],
-                           [0,0,1]])
-'''
 
 # Rotation matrix that rotates around y by 180 degrees
 rotation_by_180d = np.array([[-1,0,0],
@@ -61,7 +33,7 @@ rotation_by_180d = np.array([[-1,0,0],
                             [0,0,-1]])
 
 # Rotation matrix that rotates around y by 120 degrees
-rotation_by_120d = np.array([[ -0.5,  0,  0.8660254],#TODO: do we need to invert this in the tranformation?
+rotation_by_120d = np.array([[ -0.5,  0,  0.8660254],
                              [0,  1.,  0],
                              [-0.8660254,  0, -0.5]])
 
@@ -103,18 +75,6 @@ rotation_by_90d = np.array([[0, 0, 1],
 # Transformation matrix for flipping z
 flip_z_transform = get_transformation_matrix(flip_z, np.array([[0, 0, 0]]).T)
 
-# test tag is tag 1. data from last year
-'''global_to_tag_transformations_2023 = {
-    1: get_transformation_matrix(no_rotation, np.array([[1.071626, 0.462788, 15.513558]]).T),#values changed for test
-    2: get_transformation_matrix(rotation_by_180d, np.array([[15.513558, 2.748026, 0.462788]]).T),
-    3: get_transformation_matrix(rotation_by_180d, np.array([[15.513558, 4.424426, 0.462788]]).T),
-    4: get_transformation_matrix(rotation_by_180d, np.array([[16.178784, 6.749796, 0.695452]]).T),
-    5: get_transformation_matrix(no_rotation, np.array([[0.36195, 6.749796, 0.695452]]).T),
-    6: get_transformation_matrix(no_rotation, np.array([[1.02743, 4.424426, 0.462788]]).T),
-    7: get_transformation_matrix(no_rotation, np.array([[1.02743, 2.748026, 0.462788]]).T),
-    8: get_transformation_matrix(no_rotation, np.array([[1.02743, 1.071626, 0.462788]]).T),
-}'''
-
 
 '''
 All distances are in meters.
@@ -146,8 +106,10 @@ global_to_tag_transformations = {
 
 def estimate_pose(tag):
     '''
+    Get's the global pose based on the detector's output.
     Input: tag object
-    Output: global pose in (x, y, z)
+    Output: global pose as a pose matrix. 
+    See the comments on the dictionary above and the documentation doc for information about the coordinate system used.
     '''
 
     # Gets transformation matrix for global to apriltag
@@ -180,7 +142,7 @@ def estimate_pose(tag):
 def is_tag_valid(tag):
     '''
     Input: tag object
-    Ouptut: if the tag is between 1-16
+    Ouptut: if the tag's ID is between 1-16
     '''
 
     return tag.tag_id in global_to_tag_transformations.keys()
@@ -193,6 +155,22 @@ def get_xyz(global_to_camera):
     Z = global_to_camera[2,3]
 
     return (X, Y, Z)
+
+
+def convert_for_export(global_pose):
+    ''' 
+    Turns the robot's pose into a representation equivalent to that used by the WPILib Pose Estimators.
+    Input: transformation matrix 
+    Output: a vector containing the x and y coordinates as well as the counterclockwise angle parallel to the plane of the field from the x-axis in RADIANS.
+    '''
+    r =  Rotation.from_matrix(global_pose[:3, :3])
+    # angles are euler angles in RADIANS
+    angles = r.as_euler("xyz")
+    x = global_pose[2,3]
+    y = 8.2042 - global_pose[0, 3]
+    pose = np.array([x, y, r[1]])
+    return pose
+
 
 #####################################
 if __name__ == "__main__":
