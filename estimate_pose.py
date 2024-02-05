@@ -168,7 +168,7 @@ def convert_for_export(global_pose):
     angles = r.as_euler("xyz")
     x = global_pose[2,3]
     y = 8.2042 - global_pose[0, 3]
-    pose = np.array([x, y, 2 * math.pi - r[1]])
+    pose = np.array([x, y, 2 * math.pi - angles[1]])
     return pose
 
 
@@ -187,7 +187,14 @@ if __name__ == "__main__":
     
     multiplied = np.matmul(g_to_t, t_to_r)
 
+    test_pose = np.array([[-1,0,0,1],
+                            [0,1,0,2],
+                            [0,0,-1,3]])
+
+    conv = convert_for_export(test_pose)
+
 
     #print(estimate_pose(tag=Tag))
     #print(g_to_t)
-    print(multiplied)
+    #print(multiplied)
+    print(conv)
