@@ -166,7 +166,6 @@ def convert_for_export(global_pose):
     r =  Rotation.from_matrix(global_pose[:3, :3])
     # angles are euler angles in RADIANS
     angles = r.as_rotvec()
-    print(angles)
     x = global_pose[2,3]
     y = 8.2042 - global_pose[0, 3]
     ret_angle = angles[1]
@@ -191,7 +190,7 @@ if __name__ == "__main__":
     
     multiplied = np.matmul(g_to_t, t_to_r)
 
-    test_pose = get_transformation_matrix(rotation_by_240d, np.array([[1, 2, 3]]).T)
+    test_pose = get_transformation_matrix(rotation_by_300d, np.array([[1, 2, 3]]).T)
     #print(test_pose[:3, :3])
 
     conv = convert_for_export(test_pose)
