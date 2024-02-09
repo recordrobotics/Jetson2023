@@ -10,12 +10,11 @@ from pupil_apriltags import Detector
 # Python imports
 from detect_tags import detect_tags, filter_tags
 from draw_tags import draw_tags
-from estimate_pose_test import estimate_pose, is_tag_valid, get_xyz
-
+from estimate_pose import estimate_pose, is_tag_valid, get_xyz
 
 # Opens opencv video capture object
 #cap = cv.VideoCapture(1)
-cap = cv.VideoCapture(1, cv.CAP_DSHOW) # this is the magic!
+cap = cv.VideoCapture(0, cv.CAP_DSHOW) # this is the magic!
 cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 start_time = time.time()
@@ -26,7 +25,7 @@ from matplotlib import pyplot as plt
 import pygame
 
 pygame.init()
-size = width, height = 20*40, 20*40
+size = width, height = 13.7986 * 100, 8.2106*100
 screen = pygame.display.set_mode(size)
 position=[0,0]
 white=[255,255,255]
@@ -56,26 +55,25 @@ while True:
 
         translation = filtered_tags[0].pose_t
 
-        #print(translation[0][0], translation[1][0], translation[2][0])
-
+        rotation = filtered_tags[0].pose_R
         
         # Gets pose
-        #global_to_camera = estimate_pose(filtered_tags[0])
-        #X, Y, Z = get_xyz(global_to_camera)
-
-        #print(str(X)[:5], str(Y)[:5], str(Z)[:5])
+        global_to_robot = estimate_pose(filtered_tags[0])
+        X, Y, Z = get_xyz(global_to_robot)
 
 
-        X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
-        print(str(X)[:5], str(Y)[:5], str(Z)[:5])
+        #X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
+        print(str(X)[:6], str(Y)[:6], str(Z)[:6])#                             UNCOMMENT FOR TRANSLATION
+        #print(global_to_robot)
+        #print(rotation)
 
-        #position[0] = Z*300 + 400
-        #position[1] = X*300 + 400
+        position[0] = Z*100
+        position[1] = X*100
 
-        #screen.fill(white)
+        screen.fill(white)
 
-        #pygame.draw.circle(screen,[255,0,0],position,5,5)
-        #pygame.display.flip()
+        pygame.draw.circle(screen,[255,0,0],position,10,10)
+        pygame.display.flip()
         
 
     if cv.waitKey(1) & 0xFF == ord('q'):
