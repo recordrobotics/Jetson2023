@@ -2,6 +2,7 @@
 import numpy as np
 import cv2 as cv
 #import networktables
+from client_networktables import initialize_networktables, put_on_networktables
 import logging
 import math
 import time
@@ -11,6 +12,9 @@ from pupil_apriltags import Detector
 from detect_tags import detect_tags, filter_tags
 from draw_tags import draw_tags
 from estimate_pose import estimate_pose, is_tag_valid, get_xyz
+
+# Initialize networktables
+initialize_networktables("10.67.31.2") # 10.TE.AM.2
 
 # Opens opencv video capture object
 #cap = cv.VideoCapture(1)
@@ -60,7 +64,7 @@ while True:
         # Gets pose
         global_to_robot = estimate_pose(filtered_tags[0])
         X, Y, Z = get_xyz(global_to_robot)
-
+        put_on_networktables(X, Y)
 
         #X, Y, Z = translation[0][0], translation[1][0], translation[2][0]
         print(str(X)[:6], str(Y)[:6], str(Z)[:6])#                             UNCOMMENT FOR TRANSLATION
