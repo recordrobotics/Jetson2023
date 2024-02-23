@@ -120,9 +120,9 @@ def estimate_pose(tag):
     tag_to_camera = np.linalg.inv(camera_to_tag)
 
     #position of camera in robot frame
-    robot_to_camera = np.array([[1, 0, 0, 0],
-                                [0, 1, 0, 0],
-                                [0, 0, 1, 0],
+    robot_to_camera = np.array([[0, 0, -1, -0.38],
+                                [0, 1, 0, 0.1143],
+                                [1, 0, 0, -0.065],
                                 [0, 0, 0, 1]])#TODO: PLACEHOLDER VALUES
     
     #position of robot in camera frame

@@ -11,8 +11,8 @@ from pupil_apriltags import Detector
 # Creates a detector object from pupil_apriltags
 at_detector = Detector(
     families="tag36h11",
-    nthreads=1,
-    quad_decimate=1.0,
+    nthreads=8,
+    quad_decimate=2.0,
     quad_sigma=0.0,
     refine_edges=1,
     decode_sharpening=0.25,
@@ -30,10 +30,10 @@ def detect_tags(frame, camera_params = [974.0498583455678, 976.3940791537633, 66
 
     # Gets all detected apriltags
     tags = at_detector.detect(
-            cv.cvtColor(frame, cv.COLOR_BGR2GRAY),
+            frame,
             estimate_tag_pose=True,
             camera_params=camera_params,
-            tag_size=6*0.0254,
+            tag_size=6.5*0.0254,
         )
     # Returns
     return tags
