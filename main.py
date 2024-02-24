@@ -10,7 +10,7 @@ from pupil_apriltags import Detector
 # Python imports
 from detect_tags import detect_tags, filter_tags
 from draw_tags import draw_tags
-from estimate_pose import estimate_pose, is_tag_valid, get_xyz
+from estimate_pose import estimate_pose, is_tag_valid, get_xyz, convert_for_export
 
 # Opens opencv video capture object
 #cap = cv.VideoCapture(1)
@@ -57,6 +57,9 @@ while True:
         
         # Gets pose
         global_to_robot = estimate_pose(filtered_tags[0])
+
+        pose_converted = convert_for_export(global_to_robot)
+        
         X, Y, Z = get_xyz(global_to_robot)
 
 
