@@ -117,8 +117,8 @@ def estimate_pose(tag):
 
     # Gets tag to camera by inverting camera to tag
     camera_to_tag = get_transformation_matrix(np.matmul(rotation_by_180d, tag.pose_R), tag.pose_t)
+    #camera_to_tag = get_transformation_matrix(tag.pose_R, tag.pose_t)
     tag_to_camera = np.linalg.inv(camera_to_tag)
-
     #position of camera in robot frame
     robot_to_camera = np.array([[0, 0, -1, -0.38],
                                 [0, 1, 0, 0.1143],
@@ -130,7 +130,7 @@ def estimate_pose(tag):
 
     # Combines to get global to camera
     global_to_camera = np.matmul(global_to_tag, tag_to_camera)
-
+    #return global_to_camera
     # Combines to get global to robot
     global_to_robot = np.matmul(global_to_camera, camera_to_robot)
 
@@ -172,7 +172,8 @@ def convert_for_export(global_pose):
     if(ret_angle < 0):
         ret_angle = 2*math.pi + ret_angle
     
-    pose = np.array([x, y, 2 * math.pi - ret_angle])#angle is negative
+    ag = 2 * math.pi - ret_angle
+    pose = np.array([x, y, ag])
     return pose
 
 #####################################

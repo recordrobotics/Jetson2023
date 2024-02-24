@@ -1,5 +1,5 @@
 import time
-time.sleep(60) # zzzzzzz
+#time.sleep(60) # zzzzzzz
 
 # Imports
 print("numpy")
@@ -15,7 +15,7 @@ from pupil_apriltags import Detector
 # Python imports
 from detect_tags import detect_tags, filter_tags
 from draw_tags import draw_tags
-from estimate_pose import estimate_pose, is_tag_valid, convert_for_export
+from estimate_pose import estimate_pose, is_tag_valid, convert_for_export, get_xyz
 
 # Initialize networktables
 print("Initializing networktables")
@@ -39,6 +39,8 @@ while True:
             # Gets pose
             global_to_robot = estimate_pose(filtered_tags[0])
             pose = convert_for_export(global_to_robot)
+            #(X,Y,Z) = get_xyz(global_to_robot)
+            #put_pose([[X,Y,Z]])
             put_pose(pose)
             put_tag_id(filtered_tags[0].tag_id)
             put_has_pose(True)

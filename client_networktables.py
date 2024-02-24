@@ -10,6 +10,7 @@ def initialize_networktables(ip):
 
 def put_pose(pose):
     sd = NetworkTables.getTable("JetsonVision")
+    #for i in range(0, len(pose)):
     sd.putNumberArray("Pose", pose)
 
 def put_tag_id(id):
