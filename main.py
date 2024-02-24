@@ -13,9 +13,8 @@ import math
 from pupil_apriltags import Detector
 
 # Python imports
-from detect_tags import detect_tags, filter_tags
-from draw_tags import draw_tags
-from estimate_pose import estimate_pose, is_tag_valid, convert_for_export, get_xyz
+from detect_tags import detect_tag
+from estimate_pose import estimate_pose
 
 # Initialize networktables
 print("Initializing networktables")
@@ -32,23 +31,16 @@ while True:
     ret, frame = cam.read()
     if not frame is None:
         # Detects tags
-        tags = detect_tags(frame)
-        filtered_tags = filter_tags(tags)
 
-        if len(filtered_tags) > 0 and is_tag_valid(tag=filtered_tags[0]):
+        robot_to_april, tag_id = detect_tag(frame=frame)
+        
+        if robot_to_april:
             # Gets pose
-            global_to_robot = estimate_pose(filtered_tags[0])
-            pose = convert_for_export(global_to_robot)
-            #(X,Y,Z) = get_xyz(global_to_robot)
-            #put_pose([[X,Y,Z]])
+            pose = estimate_pose(robot_to_april, tag_id)
+            pose = [pose.translation().X(), pose.translation().Y(), pose.rotation().Z()]
             put_pose(pose)
-            put_tag_id(filtered_tags[0].tag_id)
+            put_tag_id(tag_id)
             put_has_pose(True)
-        #draw_tags(frame, filtered_tags, time.time() - start_time)
-        #start_time = time.time()
-        #cv.imshow('image', frame)
-        #if cv.waitKey(1) & 0xFF == ord('q'):
-        #    break
         else:
             put_has_pose(False)
 
