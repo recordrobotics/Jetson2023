@@ -22,7 +22,7 @@ while True:
 
     # Gets frame
     ret, frame = cam.read()
-    
+
     # If a frame exists
     if not frame is None:
         # Detects tags

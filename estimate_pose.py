@@ -19,7 +19,7 @@ with open('tag_poses', mode='r') as infile:
                 pitch = 0,
                 roll = 0,
                 yaw = degreesToRadians(float(rows[4][:-1]))
-            )
+            ),
         )
         for rows in reader
     }
