@@ -1,16 +1,9 @@
 import time
-#time.sleep(60) # zzzzzzz
+time.sleep(60) # zzzzzzz
 
 # Imports
-print("numpy")
-import numpy as np
-print("cv")
 import cv2 as cv
-print("after cv")
 from client_networktables import initialize_networktables, put_pose, put_has_pose, put_tag_id
-import logging
-import math
-from pupil_apriltags import Detector
 
 # Python imports
 from detect_tags import detect_tag
@@ -29,15 +22,18 @@ while True:
 
     # Gets frame
     ret, frame = cam.read()
+    
+    # If a frame exists
     if not frame is None:
         # Detects tags
-
         robot_to_april, tag_id = detect_tag(frame=frame)
         
+        # If a tag exists:
         if robot_to_april:
             # Gets pose
-            pose = estimate_pose(robot_to_april, tag_id)
-            pose = [pose.translation().X(), pose.translation().Y(), pose.rotation().Z()]
+            pose3d = estimate_pose(robot_to_april, tag_id)
+            pose = [pose3d.translation().X(), pose3d.translation().Y(), pose3d.rotation().Z()]
+            # Puts on networktables
             put_pose(pose)
             put_tag_id(tag_id)
             put_has_pose(True)
