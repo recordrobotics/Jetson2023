@@ -1,6 +1,9 @@
 # Imports
 from wpimath.geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
 from wpimath.units import degreesToRadians, inchesToMeters
+
+#from geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
+#from units import degreesToRadians, inchesToMeters
 import csv
 
 with open('tag_poses', mode='r') as infile:
