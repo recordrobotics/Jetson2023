@@ -1,6 +1,6 @@
 # Import
 import cv2
-import robotpy_apriltag
+import robotpy_apriltag_download as robotpy_apriltag
 from estimate_pose import tagTransforms
 
 # Sets up detector

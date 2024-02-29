@@ -1,6 +1,6 @@
 # Imports
-from wpimath.geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
-from wpimath.units import degreesToRadians, inchesToMeters
+from wpimath_download.geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
+from wpimath_download.units import degreesToRadians, inchesToMeters
 
 #from geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
 #from units import degreesToRadians, inchesToMeters
@@ -16,7 +16,7 @@ with open('tag_poses', mode='r') as infile:
             Translation3d(
                 x = inchesToMeters(float(rows[1])), 
                 y = inchesToMeters(float(rows[2])), 
-                z = inchesToMeters(float(rows[3])), 
+                z = inchesToMeters(float(rows[3])),
             ),
             Rotation3d(
                 pitch = 0,
