@@ -1,6 +1,6 @@
 # Imports
-from wpimath_download.geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
-from wpimath_download.units import degreesToRadians, inchesToMeters
+from wpimath.geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
+from wpimath.units import degreesToRadians, inchesToMeters
 
 #from geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
 #from units import degreesToRadians, inchesToMeters
