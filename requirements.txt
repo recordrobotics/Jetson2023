@@ -1,0 +1,4 @@
+robotpy
+robotpy_apriltag
+opencv-python
+pynetworktables

@@ -8,14 +8,9 @@ logging.basicConfig(level=logging.DEBUG)
 def initialize_networktables(ip):
     NetworkTables.initialize(server=ip)
 
-def put_pose(pose):
+def put_pose(pose, id, latency):
     sd = NetworkTables.getTable("JetsonVision")
-    #for i in range(0, len(pose)):
-    sd.putNumberArray("Pose", pose)
-
-def put_tag_id(id):
-    sd = NetworkTables.getTable("JetsonVision")
-    sd.putNumber("Tag ID", id)
+    sd.putNumberArray("Pose", [*pose, id, latency])
 
 def put_has_pose(hasPose):
     sd = NetworkTables.getTable("JetsonVision")

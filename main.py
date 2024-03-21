@@ -16,7 +16,6 @@ initialize_networktables("10.67.31.2") # 10.TE.AM.2
 # Opens opencv video capture object
 print("Opening VideoCapture")
 cam = cv.VideoCapture("nvarguscamerasrc ! video/x-raw(memory:NVMM), width=960, height=540 ! nvvidconv ! video/x-raw,format=GRAY8 ! videoconvert ! video/x-raw,format=GRAY8 ! appsink")
-start_time = time.time()
 
 while True:
 
@@ -34,8 +33,7 @@ while True:
             pose3d = estimate_pose(robot_to_april, tag_id)
             pose = [pose3d.translation().X(), pose3d.translation().Y(), pose3d.rotation().Z()]
             # Puts on networktables
-            put_pose(pose)
-            put_tag_id(tag_id)
+            put_pose(pose, tag_id, 0) # ZERO LATENCY!@!!
             put_has_pose(True)
         else:
             put_has_pose(False)
