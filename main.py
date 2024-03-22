@@ -3,7 +3,7 @@ import time
 
 # Imports
 import cv2 as cv
-from client_networktables import initialize_networktables, put_pose, put_has_pose, put_tag_id
+from client_networktables import initialize_networktables, put_pose, put_has_pose
 
 # Python imports
 from detect_tags import detect_tag
