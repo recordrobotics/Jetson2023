@@ -14,4 +14,5 @@ def put_pose(pose, id, latency):
 
 def put_has_pose(hasPose):
     sd = NetworkTables.getTable("JetsonVision")
+    #print(hasPose)
     sd.putBoolean("Has pose", hasPose)

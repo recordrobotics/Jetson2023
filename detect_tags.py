@@ -14,11 +14,17 @@ detector.setConfig(config)
 estimator = robotpy_apriltag.AprilTagPoseEstimator(
     robotpy_apriltag.AprilTagPoseEstimator.Config(
         0.1651,
-        483.481,
-        479.381,
-        512.579,
-        297.779,
+        233.53139518,
+        376.16494381,
+        542.62032562,
+        219.16328585,
     ))
+    
+def get_tags(frame, DETECTION_MARGIN_THRESHOLD = 40):
+   tags = detector.detect(frame)
+   filter_tags = [tag for tag in tags if 
+                   tag.getDecisionMargin() > DETECTION_MARGIN_THRESHOLD and tag.getId() in tagTransforms.keys()]
+   return filter_tags
 
 # Function to detect tags
 def detect_tag(frame, DETECTION_MARGIN_THRESHOLD = 40):
@@ -29,20 +35,21 @@ def detect_tag(frame, DETECTION_MARGIN_THRESHOLD = 40):
 
     # Gets all information about tag
     tags = detector.detect(frame)
-
+    print(dir(tags))
     # Filters tags using a decision margin threshold and tag ID
     filter_tags = [tag for tag in tags if 
-                   tag.getDecisionMargin() > DETECTION_MARGIN_THRESHOLD and tag.getId in tagTransforms.keys()]
+                   tag.getDecisionMargin() > DETECTION_MARGIN_THRESHOLD and tag.getId() in tagTransforms.keys()]
 
+    print(f"{len(tags)} {len(filter_tags)}")
     tag_poses = [(tag.getId(), estimator.estimateOrthogonalIteration(tag, 50).pose1) for tag in filter_tags]
     #tag_poses.sort(key = lambda tuple: tuple[1].translation().dis)
     if len(tag_poses) > 0:
         # Gets first of filter_tags
         tag = tag_poses[0]
         # Gets tag ID
-        tag_id = tag.getId() # Gets ID
+        tag_id = tag[0] # Gets ID
         # Gets tag pose
-        tag_pose = estimator.estimateOrthogonalIteration(tag, 50).pose1
+        tag_pose = tag[1]
         # Returns tag pose and ID
         return tag_pose, tag_id
     return None, None

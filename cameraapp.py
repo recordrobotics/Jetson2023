@@ -1,21 +1,8 @@
-import time
-#time.sleep(60) # zzzzzzz
-
-# Imports
-from client_networktables import initialize_networktables, put_pose, put_has_pose
-
-# Python imports
-from detect_tags import detect_tag, get_tags
-from estimate_pose import estimate_pose
-
-# Initialize networktables
-print("Initializing networktables")
-initialize_networktables("10.67.31.2") # 10.TE.AM.2
-
 # Imports
 import numpy as np
 import cv2
 import gi
+import os
 
 # import required library like Gstreamer and GstreamerRtspServer
 gi.require_version('Gst', '1.0')
@@ -24,67 +11,23 @@ from gi.repository import Gst, GstRtspServer, GObject
 
 cam = cv2.VideoCapture("nvarguscamerasrc ! video/x-raw(memory:NVMM), width=960, height=540 ! nvvidconv flip-method=2 ! video/x-raw,format=BGRx ! videoconvert ! video/x-raw,format=BGR ! appsink")
 
-def pa(pt):
-    return [pt.x,pt.y]
-
-def draw_tags(image, tags):
-    '''
-    Input: original unmodified frame image, tag data, time
-    Output: rendered image with apriltag overlay
-    '''
-    for tag in tags:
-        print(tag)
-        tag_id = tag.getId()
-        center = [tag.getCenter().x, tag.getCenter().y]
-        corners = [pa(tag.getCorner(0)),pa(tag.getCorner(1)),pa(tag.getCorner(2)),pa(tag.getCorner(3))]
-
-        center = (int(center[0]), int(center[1]))
-        corner_01 = (int(corners[0][0]), int(corners[0][1]))
-        corner_02 = (int(corners[1][0]), int(corners[1][1]))
-        corner_03 = (int(corners[2][0]), int(corners[2][1]))
-        corner_04 = (int(corners[3][0]), int(corners[3][1]))
-
-        # center
-        cv2.circle(image, (center[0], center[1]), 5, (0, 0, 255), 2)
-
-        # sides
-        cv2.line(image, (corner_01[0], corner_01[1]),
-                (corner_02[0], corner_02[1]), (255, 0, 0), 2)
-        cv2.line(image, (corner_02[0], corner_02[1]),
-                (corner_03[0], corner_03[1]), (255, 0, 0), 2)
-        cv2.line(image, (corner_03[0], corner_03[1]),
-                (corner_04[0], corner_04[1]), (0, 255, 0), 2)
-        cv2.line(image, (corner_04[0], corner_04[1]),
-                (corner_01[0], corner_01[1]), (0, 255, 0), 2)
-
-        # tag name
-        cv2.putText(image, str(tag_id), (center[0] - 10, center[1] - 10),
-                   cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
+directory = "calibration/calibration_images"
+global counter
+counter=1
 
 def streamReady():
     return cam.isOpened()
     
 def captureForStream():
+    global counter
     ret, frame = cam.read()
-
-    if not frame is None:
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # Detects tags
-        tags = get_tags(gray)
-        draw_tags(frame, tags)
-        robot_to_april, tag_id = detect_tag(frame=gray)
-
-        # If a tag exists:
-        if robot_to_april:
-            # Gets pose
-            pose2d = estimate_pose(robot_to_april, tag_id)
-            pose = [pose2d.translation().X(), pose2d.translation().Y(), pose2d.rotation().radians()]
-            # Puts on networktables
-            put_pose(pose, tag_id, 0) # ZERO LATENCY!@!!
-            put_has_pose(True)
-        else:
-            put_has_pose(False)
-
+    flags = os.listdir("flags")
+    if len(flags)>0:
+        os.remove("flags/"+flags[0])
+        filename = directory+"/image_"+str(counter)+".jpg"
+        cv2.imwrite(filename, frame)
+        counter+=1
+        print("PICTURE TAKEN (file at "+filename+")")
     return ret, frame
 
 # Sensor Factory class which inherits the GstRtspServer base class and add
@@ -144,6 +87,3 @@ Gst.init(None)
 server = GstServer()
 loop = GObject.MainLoop()
 loop.run()
-
-#while True:
-#    captureForStream()
