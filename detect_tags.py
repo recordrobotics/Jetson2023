@@ -35,13 +35,11 @@ def detect_tag(frame, DETECTION_MARGIN_THRESHOLD = 40):
 
     # Gets all information about tag
     tags = detector.detect(frame)
-    print(dir(tags))
     # Filters tags using a decision margin threshold and tag ID
     filter_tags = [tag for tag in tags if 
                    tag.getDecisionMargin() > DETECTION_MARGIN_THRESHOLD and tag.getId() in tagTransforms.keys()]
 
-    print(f"{len(tags)} {len(filter_tags)}")
-    tag_poses = [(tag.getId(), estimator.estimateOrthogonalIteration(tag, 50).pose1) for tag in filter_tags]
+    tag_poses = [(tag.getId(), estimator.estimateOrthogonalIteration(tag, 50).pose2) for tag in filter_tags]
     #tag_poses.sort(key = lambda tuple: tuple[1].translation().dis)
     if len(tag_poses) > 0:
         # Gets first of filter_tags

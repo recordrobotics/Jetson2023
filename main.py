@@ -33,7 +33,6 @@ def draw_tags(image, tags):
     Output: rendered image with apriltag overlay
     '''
     for tag in tags:
-        print(tag)
         tag_id = tag.getId()
         center = [tag.getCenter().x, tag.getCenter().y]
         corners = [pa(tag.getCorner(0)),pa(tag.getCorner(1)),pa(tag.getCorner(2)),pa(tag.getCorner(3))]
@@ -68,6 +67,7 @@ def captureForStream():
     ret, frame = cam.read()
 
     if not frame is None:
+        startTime = time.perf_counter_ns()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # Detects tags
         tags = get_tags(gray)
@@ -80,7 +80,8 @@ def captureForStream():
             pose2d = estimate_pose(robot_to_april, tag_id)
             pose = [pose2d.translation().X(), pose2d.translation().Y(), pose2d.rotation().radians()]
             # Puts on networktables
-            put_pose(pose, tag_id, 0) # ZERO LATENCY!@!!
+            elapsed = time.perf_counter_ns() - startTime
+            put_pose(pose, tag_id, elapsed / 1000)
             put_has_pose(True)
         else:
             put_has_pose(False)

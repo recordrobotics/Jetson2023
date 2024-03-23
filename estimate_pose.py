@@ -29,7 +29,7 @@ with open('tag_poses', mode='r') as infile:
 
 
 # Camera to robot translation
-camera_to_robot = Transform3d(Translation3d(), Rotation3d())
+camera_to_robot = Transform3d(Translation3d(0.24,0,-0.46), Rotation3d(0,0,degreesToRadians(180)))
 
 
 def estimate_pose(camera_to_april, tag_id):
@@ -39,7 +39,7 @@ def estimate_pose(camera_to_april, tag_id):
     '''
     global_to_april = tagTransforms[tag_id]
     april_to_camera = camera_to_april.inverse()
-    global_to_robot = global_to_april.transformBy(april_to_camera).transformBy(camera_to_robot)
+    global_to_robot = global_to_april.transformBy(april_to_camera)
 
     # Converts Pose3d to Pose2d then returns
     robotGlobalPose = global_to_robot.toPose2d()
