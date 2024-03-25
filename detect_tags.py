@@ -1,6 +1,6 @@
 # Import
-import cv2
 import robotpy_apriltag
+from wpimath.geometry import Transform2d, Rotation2d
 from estimate_pose import tagTransforms
 
 # Sets up detector
@@ -60,10 +60,13 @@ def detect_tag(frame, DETECTION_MARGIN_THRESHOLD = 40):
             tag_pose = tag_pose1
             print("both tag poses invalid")
 
-        # TODO get the right angle
-            
+        # Turns pose into a pose2d
+        tag_pose_2d = Transform2d(tag_pose.Z(), tag_pose.X(), Rotation2d(tag_pose.rotation().Y()))
+
+        # Printouts
+        print(tag_pose.X(), tag_pose.Y(), tag_pose.Z())
+        print(tag_pose.rotation().X(), tag_pose.rotation().Y(), tag_pose.rotation().Z())
 
         # Returns tag pose and ID
-        print(tag_pose.X(), tag_pose.Y(), tag_pose.Z())
-        return tag_pose, tag_id
+        return tag_pose_2d, tag_id
     return None, None
