@@ -61,7 +61,7 @@ def detect_tag(frame, DETECTION_MARGIN_THRESHOLD = 40):
             print("both tag poses invalid")
 
         # Turns pose into a pose2d
-        tag_pose_2d = Transform2d(Translation2d(tag_pose.X(), tag_pose.Z()), Rotation2d(tag_pose.rotation().Y()))
+        tag_pose_2d = Transform2d(Translation2d(tag_pose.Z(), tag_pose.X()), Rotation2d(tag_pose.rotation().Y()))
 
         # Printouts
         print("TRANSLATION: ", tag_pose.X(), tag_pose.Y(), tag_pose.Z())
