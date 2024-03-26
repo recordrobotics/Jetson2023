@@ -6,7 +6,7 @@ from wpimath.units import degreesToRadians, inchesToMeters
 #from units import degreesToRadians, inchesToMeters
 import csv
 
-with open('tag_poses', mode='r') as infile:
+with open('tag_poses_inverted_angles', mode='r') as infile:
     reader = csv.reader(infile, delimiter=" ")
     headers = next(reader) # skips header line
     # Gets dict of all tag transforms
@@ -40,7 +40,7 @@ def estimate_pose(camera_to_april, tag_id):
     Output: robot's global pose
     '''
     global_to_april = tagTransforms[tag_id].toPose2d()
-    april_to_camera = camera_to_april
+    april_to_camera = camera_to_april.inverse()
     global_to_robot = global_to_april.transformBy(april_to_camera).transformBy(camera_to_robot)
 
     # Converts Pose3d to Pose2d then returns
