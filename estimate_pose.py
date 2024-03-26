@@ -41,6 +41,11 @@ def estimate_pose(camera_to_april, tag_id):
     '''
     global_to_april = tagTransforms[tag_id].toPose2d()
     april_to_camera = camera_to_april.inverse()
+
+    # Printouts
+    print("TRANSLATION: ", april_to_camera.X(), april_to_camera.Y(), april_to_camera.Z())
+    print("ROTATION: ", april_to_camera.rotation().X(), april_to_camera.rotation().Y(), april_to_camera.rotation().Z())
+
     global_to_robot = global_to_april.transformBy(april_to_camera).transformBy(camera_to_robot)
 
     # Converts Pose3d to Pose2d then returns
