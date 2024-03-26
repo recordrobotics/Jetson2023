@@ -1,5 +1,5 @@
 # Imports
-from wpimath.geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
+from wpimath.geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d, Transform2d
 from wpimath.units import degreesToRadians, inchesToMeters
 
 #from geometry import Transform3d, Pose3d, Rotation3d, Pose2d, Rotation2d, Translation2d, Translation3d
@@ -29,7 +29,9 @@ with open('tag_poses', mode='r') as infile:
 
 
 # Camera to robot translation
-camera_to_robot = Transform3d(Translation3d(0.24,0,-0.46), Rotation3d(0,0,degreesToRadians(180)))
+#camera_to_robot = Transform3d(Translation3d(0.24,0,-0.46), Rotation3d(0,0,degreesToRadians(180)))
+camera_to_robot = Transform2d(Translation2d(0.24,0), Rotation2d(degreesToRadians(180)))
+
 
 
 def estimate_pose(camera_to_april, tag_id):
