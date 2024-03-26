@@ -6,7 +6,7 @@ from wpimath.units import degreesToRadians, inchesToMeters
 #from units import degreesToRadians, inchesToMeters
 import csv
 
-with open('tag_poses_inverted_angles', mode='r') as infile:
+with open('tag_poses', mode='r') as infile:
     reader = csv.reader(infile, delimiter=" ")
     headers = next(reader) # skips header line
     # Gets dict of all tag transforms
